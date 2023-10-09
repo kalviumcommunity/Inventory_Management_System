@@ -1,63 +1,103 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
 
 class Supplier {
 private:
     int supplierID;
-    const char* supplierName;
-    const char* email;
-    const char* phoneNumber;
-    const char* address;
+    string supplierName;
+    string email;
+    string phoneNumber;
+    string address;
 
 public:
-    Supplier(int id, const char* name, const char* email, const char* phone, const char* addr)
-        : supplierID(id), supplierName(name), email(email), phoneNumber(phone), address(addr) {}
+    void initializeSupplier(int id, const string& name, const string& email, const string& phone, const string& addr) {
+        supplierID = id;
+        supplierName = name;
+        this->email = email;
+        phoneNumber = phone;
+        address = addr;
+    }
 
     int getSupplierID() const { return supplierID; }
-    const char* getSupplierName() const { return supplierName; }
-    const char* getEmail() const { return email; }
-    const char* getPhoneNumber() const { return phoneNumber; }
-    const char* getAddress() const { return address; }
+    const string& getSupplierName() const { return supplierName; }
+    const string& getEmail() const { return email; }
+    const string& getPhoneNumber() const { return phoneNumber; }
+    const string& getAddress() const { return address; }
 };
 
 class Warehouse {
 private:
     int warehouseID;
-    const char* warehouseName;
-    const char* location;
+    string warehouseName;
+    string location;
     double rentalRate;
 
 public:
-    Warehouse(int id, const char* name, const char* loc, double rate)
-        : warehouseID(id), warehouseName(name), location(loc), rentalRate(rate) {}
+    void initializeWarehouse(int id, const string& name, const string& loc, double rate) {
+        warehouseID = id;
+        warehouseName = name;
+        location = loc;
+        rentalRate = rate;
+    }
 
     int getWarehouseID() const { return warehouseID; }
-    const char* getWarehouseName() const { return warehouseName; }
-    const char* getLocation() const { return location; }
+    const string& getWarehouseName() const { return warehouseName; }
+    const string& getLocation() const { return location; }
     double getRentalRate() const { return rentalRate; }
 };
 
 class Product {
 private:
     int productID;
-    const char* productName;
+    string productName;
     int quantityInStock;
     int supplierID;
 
 public:
-    Product(int id, const char* name, int quantity, int suppID)
-        : productID(id), productName(name), quantityInStock(quantity), supplierID(suppID) {}
+    void initializeProduct(int id, const string& name, int quantity, int suppID) {
+        productID = id;
+        productName = name;
+        quantityInStock = quantity;
+        supplierID = suppID;
+    }
 
     int getProductID() const { return productID; }
-    const char* getProductName() const { return productName; }
+    const string& getProductName() const { return productName; }
     int getQuantityInStock() const { return quantityInStock; }
     int getSupplierID() const { return supplierID; }
 };
 
+class RentedWarehouse : public Warehouse, public Product {
+public:
+    void initializeRentedWarehouse(int warehouseID, const string& warehouseName, const string& location, double rentalRate,
+                                   int productID, const string& productName, int quantity, int supplierID) {
+        Warehouse::initializeWarehouse(warehouseID, warehouseName, location, rentalRate);
+        Product::initializeProduct(productID, productName, quantity, supplierID);
+    }
+
+    void displayRentedWarehouseInfo() const {
+        
+        cout << "Warehouse ID: " << this->getWarehouseID() << endl;
+        cout << "Warehouse Name: " << this->getWarehouseName() << endl;
+        cout << "Location: " << this->getLocation() << endl;
+        cout << "Rental Rate: " << this->getRentalRate() << endl;
+        cout << "Product ID: " << this->getProductID() << endl;
+        cout << "Product Name: " << this->getProductName() << endl;
+        cout << "Quantity in Stock: " << this->getQuantityInStock() << endl;
+        cout << "Supplier ID: " << this->getSupplierID() << endl;
+    }
+};
+
 int main() {
-    Supplier supplier1(1, "Supplier A", "supplierA@email.com", "123-456-7890", "123 Supplier St.");
-    Warehouse warehouse1(1, "Warehouse X", "Location X", 500.0);
-    Product product1(1, "Product 1", 100, supplier1.getSupplierID());
+    Supplier supplier1;
+    supplier1.initializeSupplier(1, "Supplier A", "supplierA@email.com", "123-456-7890", "123 Supplier St.");
+
+    RentedWarehouse rentedWarehouse1;
+    rentedWarehouse1.initializeRentedWarehouse(1, "Rented Warehouse Y", "Location Y", 700.0, 2, "Product 2", 200, supplier1.getSupplierID());
+
+    rentedWarehouse1.displayRentedWarehouseInfo();
 
     return 0;
 }
