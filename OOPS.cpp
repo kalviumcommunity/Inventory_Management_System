@@ -117,11 +117,20 @@ public:
 };
 
 int main() {
-    Supplier supplier1;
-    supplier1.initializeSupplier(1, "Supplier A", "supplierA@email.com", "123-456-7890", "123 Supplier St.");
+    const int numSuppliers = 3; 
+    const int numWarehouses = 2;
 
-    RentedWarehouse rentedWarehouse1;
-    rentedWarehouse1.initializeRentedWarehouse(1, "Rented Warehouse Y", "Location Y", 700.0, 2, "Product 2", 200, supplier1.getSupplierID());
 
-    rentedWarehouse1.displayRentedWarehouseInfo();
+    Supplier suppliers[numSuppliers];
+
+    suppliers[0] = Supplier(1, "Supplier A", "supplierA@email.com", "123-456-7890", "123 Supplier St.");
+    suppliers[1] = Supplier(2, "Supplier B", "supplierB@email.com", "987-654-3210", "456 Supplier Rd.");
+    suppliers[2] = Supplier(3, "Supplier C", "supplierC@email.com", "111-222-3333", "789 Supplier Ave.");
+
+
+    RentedWarehouse rentedWarehouses[numWarehouses];
+
+    rentedWarehouses[0] = RentedWarehouse(1, "Rented Warehouse Y", "Location Y", 700.0, 2, "Product 2", 200, suppliers[0].getSupplierID());
+    rentedWarehouses[1] = RentedWarehouse(2, "Rented Warehouse X", "Location X", 600.0, 1, "Product 1", 150, suppliers[1].getSupplierID());
+
 }
