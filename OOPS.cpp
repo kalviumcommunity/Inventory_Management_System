@@ -12,12 +12,17 @@ private:
     string address;
 
 public:
-    void initializeSupplier(int id, const string& name, const string& email, const string& phone, const string& addr) {
-        supplierID = id;
-        supplierName = name;
-        this->email = email;
-        phoneNumber = phone;
-        address = addr;
+
+    Supplier() : supplierID(0), supplierName(""), email(""), phoneNumber(""), address("") {
+    }
+
+    Supplier(int id, const string& name, const string& email, const string& phone, const string& addr)
+        : supplierID(id), supplierName(name), email(email), phoneNumber(phone), address(addr) {
+        cout << "Supplier object created with ID " << supplierID << endl;
+    }
+
+    ~Supplier() {
+        cout << "Supplier object destroyed with ID " << supplierID << endl;
     }
 
     int getSupplierID() const { return supplierID; }
@@ -35,11 +40,17 @@ private:
     double rentalRate;
 
 public:
-    void initializeWarehouse(int id, const string& name, const string& loc, double rate) {
-        warehouseID = id;
-        warehouseName = name;
-        location = loc;
-        rentalRate = rate;
+
+    Warehouse() : warehouseID(0), warehouseName(""), location(""), rentalRate(0.0) {
+    }
+
+    Warehouse(int id, const string& name, const string& loc, double rate)
+        : warehouseID(id), warehouseName(name), location(loc), rentalRate(rate) {
+        cout << "Warehouse object created with ID " << warehouseID << endl;
+    }
+
+    ~Warehouse() {
+        cout << "Warehouse object destroyed with ID " << warehouseID << endl;
     }
 
     int getWarehouseID() const { return warehouseID; }
@@ -56,11 +67,17 @@ private:
     int supplierID;
 
 public:
-    void initializeProduct(int id, const string& name, int quantity, int suppID) {
-        productID = id;
-        productName = name;
-        quantityInStock = quantity;
-        supplierID = suppID;
+
+    Product() : productID(0), productName(""), quantityInStock(0), supplierID(0) {
+    }
+
+    Product(int id, const string& name, int quantity, int suppID)
+        : productID(id), productName(name), quantityInStock(quantity), supplierID(suppID) {
+        cout << "Product object created with ID " << productID << endl;
+    }
+
+    ~Product() {
+        cout << "Product object destroyed with ID " << productID << endl;
     }
 
     int getProductID() const { return productID; }
@@ -71,10 +88,19 @@ public:
 
 class RentedWarehouse : public Warehouse, public Product {
 public:
-    void initializeRentedWarehouse(int warehouseID, const string& warehouseName, const string& location, double rentalRate,
-                                   int productID, const string& productName, int quantity, int supplierID) {
-        Warehouse::initializeWarehouse(warehouseID, warehouseName, location, rentalRate);
-        Product::initializeProduct(productID, productName, quantity, supplierID);
+
+    RentedWarehouse() : Warehouse(), Product() {
+    }
+
+    RentedWarehouse(int warehouseID, const string& warehouseName, const string& location, double rentalRate,
+                   int productID, const string& productName, int quantity, int supplierID)
+        : Warehouse(warehouseID, warehouseName, location, rentalRate),
+          Product(productID, productName, quantity, supplierID) {
+        cout << "RentedWarehouse object created with Warehouse ID " << warehouseID << " and Product ID " << productID << endl;
+    }
+
+    ~RentedWarehouse() {
+        cout << "RentedWarehouse object destroyed with Warehouse ID " << getWarehouseID() << " and Product ID " << getProductID() << endl;
     }
 
     void displayRentedWarehouseInfo() const {
@@ -98,6 +124,4 @@ int main() {
     rentedWarehouse1.initializeRentedWarehouse(1, "Rented Warehouse Y", "Location Y", 700.0, 2, "Product 2", 200, supplier1.getSupplierID());
 
     rentedWarehouse1.displayRentedWarehouseInfo();
-
-    return 0;
 }
