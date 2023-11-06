@@ -96,8 +96,13 @@ public:
 };
 
 class RentedWarehouse : public Warehouse, public Product {
+private:
+    static int numberOfRentedWarehouses;
 
 public:
+    RentedWarehouse() : Warehouse(), Product() {
+        numberOfRentedWarehouses++;
+    }
 
     RentedWarehouse(int warehouseID, const string& warehouseName, const string& location, double rentalRate,
                    int productID, const string& productName, int quantity, int supplierID)
@@ -121,6 +126,9 @@ public:
         cout << "Supplier ID: " << this->getSupplierID() << endl;
     }
 
+    static int getNumberOfRentedWarehouses() {
+        return numberOfRentedWarehouses;
+    }
 };
 
 int main() {
