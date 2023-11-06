@@ -59,7 +59,12 @@ public:
     double getRentalRate() const { return rentalRate; }
 };
 
-class Product {
+class Storable {
+public:
+    virtual void storeItem() = 0;
+};
+
+class Product : public Storable {
 private:
     int productID;
     string productName;
@@ -84,13 +89,15 @@ public:
     const string& getProductName() const { return productName; }
     int getQuantityInStock() const { return quantityInStock; }
     int getSupplierID() const { return supplierID; }
+
+    void storeItem() override {
+        cout << "Storing the product with ID " << getProductID() << " in the warehouse." << endl;
+    }
 };
 
 class RentedWarehouse : public Warehouse, public Product {
-public:
 
-    RentedWarehouse() : Warehouse(), Product() {
-    }
+public:
 
     RentedWarehouse(int warehouseID, const string& warehouseName, const string& location, double rentalRate,
                    int productID, const string& productName, int quantity, int supplierID)
@@ -104,7 +111,6 @@ public:
     }
 
     void displayRentedWarehouseInfo() const {
-        
         cout << "Warehouse ID: " << this->getWarehouseID() << endl;
         cout << "Warehouse Name: " << this->getWarehouseName() << endl;
         cout << "Location: " << this->getLocation() << endl;
@@ -114,6 +120,7 @@ public:
         cout << "Quantity in Stock: " << this->getQuantityInStock() << endl;
         cout << "Supplier ID: " << this->getSupplierID() << endl;
     }
+
 };
 
 int main() {
