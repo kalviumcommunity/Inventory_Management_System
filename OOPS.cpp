@@ -3,20 +3,20 @@
 
 using namespace std;
 
+template <typename IDType>
 class Supplier {
 private:
-    int supplierID;
+    IDType supplierID;
     string supplierName;
     string email;
     string phoneNumber;
     string address;
 
 public:
-
     Supplier() : supplierID(0), supplierName(""), email(""), phoneNumber(""), address("") {
     }
 
-    Supplier(int id, const string& name, const string& email, const string& phone, const string& addr)
+    Supplier(IDType id, const string& name, const string& email, const string& phone, const string& addr)
         : supplierID(id), supplierName(name), email(email), phoneNumber(phone), address(addr) {
         cout << "Supplier object created with ID " << supplierID << endl;
     }
@@ -25,7 +25,7 @@ public:
         cout << "Supplier object destroyed with ID " << supplierID << endl;
     }
 
-    int getSupplierID() const { return supplierID; }
+    IDType getSupplierID() const { return supplierID; }
     const string& getSupplierName() const { return supplierName; }
     const string& getEmail() const { return email; }
     const string& getPhoneNumber() const { return phoneNumber; }
@@ -131,6 +131,8 @@ public:
     }
 };
 
+int RentedWarehouse::numberOfRentedWarehouses = 0;
+
 int main() {
     const int numSuppliers = 3; 
     const int numWarehouses = 2;
@@ -147,5 +149,16 @@ int main() {
 
     rentedWarehouses[0] = RentedWarehouse(1, "Rented Warehouse Y", "Location Y", 700.0, 2, "Product 2", 200, suppliers[0].getSupplierID());
     rentedWarehouses[1] = RentedWarehouse(2, "Rented Warehouse X", "Location X", 600.0, 1, "Product 1", 150, suppliers[1].getSupplierID());
+
+    const int numSuppliers = 3;
+
+    for (int i = 0; i < numSuppliers; ++i) {
+        cout << "Supplier ID: " << suppliers[i].getSupplierID() << endl;
+        cout << "Supplier Name: " << suppliers[i].getSupplierName() << endl;
+        cout << "Email: " << suppliers[i].getEmail() << endl;
+        cout << "Phone Number: " << suppliers[i].getPhoneNumber() << endl;
+        cout << "Address: " << suppliers[i].getAddress() << endl;
+        cout << endl;
+    }
 
 }
